@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang='pt-BR'>
+<head>
+  <meta charset='UTF-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Calculadora</title>
+</head>
+<body>
+  <p>Informe dois números para realizar a soma:</p>
+  <label for='value1'>Valor 1:</label>
+  <input type='text' id='value1'>
+  <label for='value2'>Valor 2:</label>
+  <input type='text' id='value2'>
+  <button id='button'>Somar</button>
+  <p id='result'></p>
+
+  <script>
+    
+    const verifyIsFilledAndNumber = (value1, value2) => {
+        // Caso a pessoa usuária não preencha nenhum input, ou preencha apenas um input, lance um erro.
+        if (value1.length === 0 || value2.length === 0) {
+            throw new Error('Preencha os campos!');
+        }
+        // Caso os valores inseridos nos inputs pela pessoa usuária não sejam números, lance um erro.
+        console.log(typeof value1)
+        if (isNaN(value1) || isNaN(value2)) {
+            throw new Error('Os valores devem ser numéricos!');
+        }
+    }; 
+        
+    const sum = (value1,value2) => {
+        try {
+          // capturar valores inseridos nos inputs
+          const value1 = document.getElementById('value1').value;
+          const value2 = document.getElementById('value2').value;  
+          // chamar função de verificação de ERROR
+          verifyIsFilledAndNumber(value1,value2);
+          // Se não houver erro, vai executar a função de soma abaixo
+          const result = Number(value1) + Number(value2);
+          document.getElementById('result').innerHTML = `Resultado: ${result}`;
+        } catch (error) {
+          document.getElementById('result').innerHTML = `Erro: ${error.message}`;
+        } finally {
+          // p/ limpar o campo dos inputs assim que a função for executada ou o erro for exibido
+          document.getElementById('value1').value = ''; 
+          document.getElementById('value2').value = '';
+        }
+    };
+
+    window.onload = () => {
+      // captura botão
+      const button = document.getElementById('button');
+      // assim que houver o click no button, a função sum será executada
+      button.addEventListener('click', sum);
+    }
+  </script>
+</body>
+</html>
